@@ -522,10 +522,27 @@ export class DialogComponent implements OnInit {
         return false;
     }
 
+    isModal() : boolean {
+        if(document.getElementsByClassName('modal-dialog')) {
+            return true;
+        }
+        return false;
+    }
+
     createBox(element: any, offset: boolean): any {
+
+        let modalElement = {
+            top: 0,
+            left: 0
+        }
+
+        if (this.isModal()) {
+            modalElement.top = document.getElementsByClassName('modal-dialog')[0].getBoundingClientRect().top
+            modalElement.left = document.getElementsByClassName('modal-dialog')[0].getBoundingClientRect().left
+        }
         return {
-            top: element.getBoundingClientRect().top + (offset ? window.pageYOffset : 0),
-            left: element.getBoundingClientRect().left + (offset ? window.pageXOffset : 0),
+            top: element.getBoundingClientRect().top - modalElement.top + (offset ? window.pageYOffset : 0),
+            left: element.getBoundingClientRect().left - modalElement.left + (offset ? window.pageXOffset : 0),
             width: element.offsetWidth,
             height: element.offsetHeight
         };

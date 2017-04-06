@@ -159,5 +159,6 @@ export declare class DialogComponent implements OnInit {
     formatPolicy(): number;
     update(emit?: boolean): void;
     isDescendant(parent: any, child: any): boolean;
+    isModal(): boolean;
     createBox(element: any, offset: boolean): any;
 }
