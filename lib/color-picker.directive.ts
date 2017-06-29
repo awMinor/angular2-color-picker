@@ -605,17 +605,28 @@ export class DialogComponent implements OnInit {
         return false;
     }
 
+    isIe () {
+        let ua = navigator.userAgent;
+        if (navigator.appName == 'Microsoft Internet Explorer') {
+            return true;
+        } else if (navigator.appName == 'Netscape' && ua.indexOf('Trident') != -1) {
+            return true;
+        }
+        return false;
+    }
+
     createBox(element: any, offset: boolean): any {
 
         let modalElement = {
             top: 0,
             left: 0
-        }
+        };
 
-        if (this.isModal()) {
+        if (this.isModal() && !this.isIe()) {
             modalElement.top = document.getElementsByClassName('modal-dialog')[0].getBoundingClientRect().top
             modalElement.left = document.getElementsByClassName('modal-dialog')[0].getBoundingClientRect().left
         }
+
         return {
             top: element.getBoundingClientRect().top - modalElement.top + (offset ? window.pageYOffset : 0),
             left: element.getBoundingClientRect().left - modalElement.left + (offset ? window.pageXOffset : 0),
